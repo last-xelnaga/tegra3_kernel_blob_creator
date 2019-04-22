@@ -80,6 +80,11 @@ int main (
 
     // get the boot.img file size
     FILE* p_infile = fopen (p_infile_name, "rb");
+    if (!p_infile)
+    {
+        fprintf (stderr, "img file namedoes not exist. abort\n");
+        exit (EXIT_FAILURE);
+    }
     fseek (p_infile, 0, SEEK_END);
     long infile_size = ftell (p_infile);
     fseek (p_infile, 0, SEEK_SET);
@@ -96,6 +101,11 @@ int main (
 
     // write header to the output file
     FILE* p_outfile = fopen (p_outfile_name, "wb");
+    if (!p_outfile)
+    {
+        fprintf (stderr, "blob file could not be created. abort\n");
+        exit (EXIT_FAILURE);
+    }
     fwrite (blob_header, sizeof (blob_header), 1, p_outfile);
 
     // append output file using partition file
